@@ -41,7 +41,7 @@ class _SplashState extends State<Splash> {
     super.initState();
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => MyApp1()));
+          context, MaterialPageRoute(builder: (context) => LoginScreen()));
     });
   }
 

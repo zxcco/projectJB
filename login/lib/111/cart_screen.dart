@@ -40,41 +40,44 @@ class CartScreen extends StatelessWidget {
       int one = int.parse(monny);
       int two = int.parse(controller.total);
       int tree = one - two;
-
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('คุณ' + ' $name' + ' $Lastname'),
-            content: Text('ยอดเงินในบัญชี ' +
-                '$one' +
-                " บาท" +
-                '\n' +
-                "จำนวนเงิน " +
-                controller.total +
-                " บาท" +
-                '\n' +
-                "ยอดเงินคงเหลือ " +
-                '$tree' +
-                " บาท"),
-            actions: [
-              TextButton(
-                onPressed: () async {
-                  final aaa =
-                      FirebaseFirestore.instance.collection("Userprofile");
-                  final bbbb = aaa.doc(_email_changeController.text);
-                  bbbb.update({"monny": tree.toString()});
-                  Navigator.of(context).pop();
-                  _email_changeController.text = '';
-                  _price_changeController.text = '';
-                  _phone_changeController.text = '';
-                },
-                child: Text('ปิด'),
-              ),
-            ],
-          );
-        },
-      );
+      double monny1 = double.parse(monny);
+      var text_price1 = double.parse(controller.total);
+      if (monny1 >= text_price1) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('คุณ' + ' $name' + ' $Lastname'),
+              content: Text('ยอดเงินในบัญชี ' +
+                  '$one' +
+                  " บาท" +
+                  '\n' +
+                  "จำนวนเงิน " +
+                  controller.total +
+                  " บาท" +
+                  '\n' +
+                  "ยอดเงินคงเหลือ " +
+                  '$tree' +
+                  " บาท"),
+              actions: [
+                TextButton(
+                  onPressed: () async {
+                    final aaa =
+                        FirebaseFirestore.instance.collection("Userprofile");
+                    final bbbb = aaa.doc(_email_changeController.text);
+                    bbbb.update({"monny": tree.toString()});
+                    Navigator.of(context).pop();
+                    _email_changeController.text = '';
+                    _price_changeController.text = '';
+                    _phone_changeController.text = '';
+                  },
+                  child: Text('ปิด'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {}
     }
 
     sss() async {
@@ -126,6 +129,43 @@ class CartScreen extends StatelessWidget {
           );
     }
 
+    Future showMyDialogMomonNy(
+            int one, int tree, String name, String Lastname) =>
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('ยอดเงินในบัญชีไม่พอ '),
+              content: Text(' คุณ' +
+                  ' $name' +
+                  ' $Lastname' +
+                  "\n" +
+                  " ยอดเงินในบัญชี " +
+                  one.toString() +
+                  " บาท" +
+                  "\n" +
+                  " ขาดอีก " +
+                  tree.toString() +
+                  " บาท"),
+              actions: [
+                TextButton(
+                  onPressed: () async {
+                    // final aaa =
+                    //     FirebaseFirestore.instance.collection("Userprofile");
+                    // final bbbb = aaa.doc(_email_changeController.text);
+                    // bbbb.update({"monny": tree.toString()});
+                    Navigator.of(context).pop();
+                    // _email_changeController.text = '';
+                    // _price_changeController.text = '';
+                    // _phone_changeController.text = '';
+                  },
+                  child: Text('ปิด'),
+                ),
+              ],
+            );
+          },
+        );
+
     Future showMyDialog123(int one, int tree, String name, String Lastname) =>
         showDialog(
             context: context,
@@ -145,15 +185,20 @@ class CartScreen extends StatelessWidget {
                   actions: [
                     TextButton(
                       onPressed: () async {
-                        final aaa = FirebaseFirestore.instance
-                            .collection("Userprofile");
-                        final bbbb = aaa.doc(_email_changeController.text);
-                        bbbb.update({"monny": tree.toString()});
-                        Navigator.of(context).pop();
-                        _email_changeController.text = '';
-                        _price_changeController.text = '';
-                        _phone_changeController.text = '';
-                        controller.clearProduct();
+                        if (tree >= 0) {
+                          final aaa = FirebaseFirestore.instance
+                              .collection("Userprofile");
+                          final bbbb = aaa.doc(_email_changeController.text);
+                          bbbb.update({"monny": tree.toString()});
+                          Navigator.of(context).pop();
+                          _email_changeController.text = '';
+                          _price_changeController.text = '';
+                          _phone_changeController.text = '';
+                          controller.clearProduct();
+                        } else {
+                          Navigator.of(context).pop();
+                          showMyDialogMomonNy(one, tree, name, Lastname);
+                        }
                       },
                       child: Text('ปิด'),
                     ),
@@ -343,7 +388,6 @@ class CartScreen extends StatelessWidget {
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     }
-
                     Navigator.of(context).pop();
                     showMyDialog123(one, tree, name, Lastname);
 

@@ -17,7 +17,7 @@ class _page3State extends State<page3> {
   CollectionReference _profilecollection =
       FirebaseFirestore.instance.collection("Userprofile");
   TextEditingController _email_changeController = TextEditingController();
-  TextEditingController _Phone_changeController = TextEditingController();
+  // TextEditingController _Phone_changeController = TextEditingController();
   TextEditingController _price_changeController = TextEditingController();
 
   Future<void> showMyDialog(BuildContext context) async {
@@ -60,7 +60,7 @@ class _page3State extends State<page3> {
                 Navigator.of(context).pop();
                 _email_changeController.text = '';
                 _price_changeController.text = '';
-                _Phone_changeController.text = '';
+                // _Phone_changeController.text = '';
               },
               child: Text('ปิด'),
             ),
@@ -216,54 +216,54 @@ class _page3State extends State<page3> {
                                     SizedBox(
                                       height: 20,
                                     ),
-                                    TextFormField(
-                                      keyboardType:
-                                          TextInputType.numberWithOptions(
-                                        decimal: true,
-                                      ),
-                                      controller: _Phone_changeController,
-                                      decoration: InputDecoration(
-                                        labelText: 'เบอร์โทรศัพท์',
-                                        hintText: '',
-                                        prefixIcon: SizedBox(
-                                          height: 20,
-                                          width: 20,
-                                          child: Icon(Icons.password_sharp),
-                                        ),
-                                        contentPadding: EdgeInsets.symmetric(
-                                            vertical: 16, horizontal: 8),
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            color: Colors.grey.shade100,
-                                            width: 1,
-                                          ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            color: Colors.grey.shade100,
-                                            width: 2,
-                                          ),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            color: Colors.red.shade600,
-                                            width: 2,
-                                          ),
-                                        ),
-                                      ),
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'เบอร์โทรศัพท์';
-                                        }
-                                        return null;
-                                      },
-                                    ),
+                                    // TextFormField(
+                                    //   keyboardType:
+                                    //       TextInputType.numberWithOptions(
+                                    //     decimal: true,
+                                    //   ),
+                                    //   controller: _Phone_changeController,
+                                    //   decoration: InputDecoration(
+                                    //     labelText: 'เบอร์โทรศัพท์',
+                                    //     hintText: '',
+                                    //     prefixIcon: SizedBox(
+                                    //       height: 20,
+                                    //       width: 20,
+                                    //       child: Icon(Icons.password_sharp),
+                                    //     ),
+                                    //     contentPadding: EdgeInsets.symmetric(
+                                    //         vertical: 16, horizontal: 8),
+                                    //     border: OutlineInputBorder(
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(10),
+                                    //       borderSide: BorderSide(
+                                    //         color: Colors.grey.shade100,
+                                    //         width: 1,
+                                    //       ),
+                                    //     ),
+                                    //     focusedBorder: OutlineInputBorder(
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(10),
+                                    //       borderSide: BorderSide(
+                                    //         color: Colors.grey.shade100,
+                                    //         width: 2,
+                                    //       ),
+                                    //     ),
+                                    //     errorBorder: OutlineInputBorder(
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(10),
+                                    //       borderSide: BorderSide(
+                                    //         color: Colors.red.shade600,
+                                    //         width: 2,
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    //   validator: (value) {
+                                    //     if (value == null || value.isEmpty) {
+                                    //       return 'เบอร์โทรศัพท์';
+                                    //     }
+                                    //     return null;
+                                    //   },
+                                    // ),
                                     SizedBox(
                                       height: 20,
                                     ),
@@ -334,26 +334,27 @@ class _page3State extends State<page3> {
                                                   .get();
                                           if (docGet == null) {
                                             showMyDialogNoUser(context);
-                                          } else {
-                                            try {
-                                              Object? data = docGet.data();
-                                              String Phone =
-                                                  docGet.get('Phone');
-                                              String monny =
-                                                  docGet.get('monny');
-                                              String Lastname =
-                                                  docGet.get('Lastname');
-                                              if (_Phone_changeController
-                                                      .text ==
-                                                  Phone) {
-                                                showMyDialog(context);
-                                              } else {
-                                                showMyDialogEorer(context);
-                                              }
-                                            } catch (e) {
-                                              showMyDialogEorer(context);
-                                            }
                                           }
+                                          // else {
+                                          // try {
+                                          //   Object? data = docGet.data();
+                                          //   String Phone =
+                                          //       docGet.get('Phone');
+                                          //   String monny =
+                                          //       docGet.get('monny');
+                                          //   String Lastname =
+                                          //       docGet.get('Lastname');
+                                          //   if (_Phone_changeController
+                                          //           .text ==
+                                          //       Phone) {
+                                          showMyDialog(context);
+                                          //   } else {
+                                          //     showMyDialogEorer(context);
+                                          //   }
+                                          // } catch (e) {
+                                          //   showMyDialogEorer(context);
+                                          // }
+                                          // }
                                         }
                                       },
                                       child: Text(
