@@ -72,12 +72,11 @@ class _UserRegisterState extends State<UserRegister> {
                                 Text(
                                   "เพิ่มบัญชีลูกค้า",
                                   style: TextStyle(
-                                    color: Color.fromARGB(255, 253, 253, 253),
-                                    letterSpacing: 1,
-                                    fontSize: 24.0,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'OpenSans',
-                                  ),
+                                      color: Color.fromARGB(255, 253, 253, 253),
+                                      letterSpacing: 1,
+                                      fontSize: 24.0,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Schyler'),
                                 )
                               ],
                             ),
@@ -240,13 +239,12 @@ class _UserRegisterState extends State<UserRegister> {
                                           child: Text(
                                             "ยกเลิก",
                                             style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 253, 253, 253),
-                                              letterSpacing: 1,
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: 'OpenSans',
-                                            ),
+                                                color: Color.fromARGB(
+                                                    255, 253, 253, 253),
+                                                letterSpacing: 1,
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'Schyler'),
                                           )),
                                       ElevatedButton(
                                         // elevation: 5.0,
@@ -329,13 +327,12 @@ class _UserRegisterState extends State<UserRegister> {
                                         child: Text(
                                           'ยืนยัน',
                                           style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 253, 253, 253),
-                                            letterSpacing: 1,
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'OpenSans',
-                                          ),
+                                              color: Color.fromARGB(
+                                                  255, 253, 253, 253),
+                                              letterSpacing: 1,
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Schyler'),
                                         ),
                                       ),
                                     ],
