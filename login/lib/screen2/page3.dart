@@ -424,56 +424,21 @@ class _page3State extends State<page3> {
 
                           GestureDetector(
                             child: Container(
-                                width: 700,
-                                height: 350,
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  image: DecorationImage(
-                                      image: AssetImage("assets/images/36.jpg"),
-                                      fit: BoxFit.cover),
+                              width: 700,
+                              height: 350,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.red, // สีขอบที่ต้องการ
+                                  width: 2, // ความหนาของขอบที่ต้องการ
                                 ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 160,
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 15.0),
-                                      child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            // ElevatedButton(
-                                            //   // elevation: 5.0,
-                                            //   onPressed: () {
-                                            //     Navigator.pushReplacement(
-                                            //         context,
-                                            //         MaterialPageRoute(
-                                            //             builder: (context) =>
-                                            //                 page6()));
-                                            //   },
-                                            //   // padding: EdgeInsets.all(10.0),
-                                            //   // shape: RoundedRectangleBorder(
-                                            //   //   borderRadius:
-                                            //   //       BorderRadius.circular(30.0),
-                                            //   // ),
-                                            //   // color: Color.fromARGB(
-                                            //   //     255, 255, 255, 255),
-                                            //   child: Text(
-                                            //     'รายละเอียด',
-                                            //     style: TextStyle(
-                                            //       color:
-                                            //           Color.fromARGB(255, 0, 0, 0),
-                                            //       letterSpacing: 1,
-                                            //       fontSize: 15.0,
-                                            //       fontWeight: FontWeight.bold,
-                                            //       fontFamily: 'OpenSans',
-                                            //     ),
-                                            //   ),
-                                            // ),
-                                          ]),
-                                    ),
-                                  ],
-                                )),
+                                borderRadius: BorderRadius.circular(
+                                    10), // ขอบเขตรูปร่างของ Container
+                                image: DecorationImage(
+                                  image: AssetImage("assets/images/11.jpg"),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
                           ),
                           // Container(
 
@@ -488,169 +453,63 @@ class _page3State extends State<page3> {
                           ),
                           GestureDetector(
                             child: Container(
-                                width: 700,
-                                height: 350,
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  image: DecorationImage(
-                                      image: AssetImage("assets/images/35.jpg"),
-                                      fit: BoxFit.cover),
+                              width: 700,
+                              height: 350,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.red, // สีขอบที่ต้องการ
+                                  width: 2, // ความหนาของขอบที่ต้องการ
                                 ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 160,
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 15.0),
-                                      child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            // ElevatedButton(
-                                            //   // elevation: 5.0,
-                                            //   onPressed: () {
-                                            //     Navigator.pushReplacement(
-                                            //         context,
-                                            //         MaterialPageRoute(
-                                            //             builder: (context) =>
-                                            //                 page6()));
-                                            //   },
-                                            //   // padding: EdgeInsets.all(10.0),
-                                            //   // shape: RoundedRectangleBorder(
-                                            //   //   borderRadius:
-                                            //   //       BorderRadius.circular(30.0),
-                                            //   // ),
-                                            //   // color: Color.fromARGB(
-                                            //   //     255, 255, 255, 255),
-                                            //   child: Text(
-                                            //     'รายละเอียด',
-                                            //     style: TextStyle(
-                                            //       color:
-                                            //           Color.fromARGB(255, 0, 0, 0),
-                                            //       letterSpacing: 1,
-                                            //       fontSize: 15.0,
-                                            //       fontWeight: FontWeight.bold,
-                                            //       fontFamily: 'OpenSans',
-                                            //     ),
-                                            //   ),
-                                            // ),
-                                          ]),
-                                    ),
-                                  ],
-                                )),
+                                borderRadius: BorderRadius.circular(
+                                    10), // ขอบเขตรูปร่างของ Container
+                                image: DecorationImage(
+                                  image: AssetImage("assets/images/22.jpg"),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
                           ),
                           SizedBox(
                             height: 20,
                           ),
                           GestureDetector(
                             child: Container(
-                                width: 700,
-                                height: 350,
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  image: DecorationImage(
-                                      image: AssetImage("assets/images/37.png"),
-                                      fit: BoxFit.cover),
+                              width: 700,
+                              height: 350,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.red, // สีขอบที่ต้องการ
+                                  width: 2, // ความหนาของขอบที่ต้องการ
                                 ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 160,
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 15.0),
-                                      child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            // ElevatedButton(
-                                            //   // elevation: 5.0,
-                                            //   onPressed: () {
-                                            //     Navigator.pushReplacement(
-                                            //         context,
-                                            //         MaterialPageRoute(
-                                            //             builder: (context) =>
-                                            //                 page6()));
-                                            //   },
-                                            //   // padding: EdgeInsets.all(10.0),
-                                            //   // shape: RoundedRectangleBorder(
-                                            //   //   borderRadius:
-                                            //   //       BorderRadius.circular(30.0),
-                                            //   // ),
-                                            //   // color: Color.fromARGB(
-                                            //   //     255, 255, 255, 255),
-                                            //   child: Text(
-                                            //     'รายละเอียด',
-                                            //     style: TextStyle(
-                                            //       color:
-                                            //           Color.fromARGB(255, 0, 0, 0),
-                                            //       letterSpacing: 1,
-                                            //       fontSize: 15.0,
-                                            //       fontWeight: FontWeight.bold,
-                                            //       fontFamily: 'OpenSans',
-                                            //     ),
-                                            //   ),
-                                            // ),
-                                          ]),
-                                    ),
-                                  ],
-                                )),
+                                borderRadius: BorderRadius.circular(
+                                    10), // ขอบเขตรูปร่างของ Container
+                                image: DecorationImage(
+                                  image: AssetImage("assets/images/33.jpg"),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
                           ),
                           SizedBox(
                             height: 20,
                           ),
                           GestureDetector(
                             child: Container(
-                                width: 700,
-                                height: 350,
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/images/logo02.jpg"),
-                                      fit: BoxFit.cover),
+                              width: 700,
+                              height: 350,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.red, // สีขอบที่ต้องการ
+                                  width: 2, // ความหนาของขอบที่ต้องการ
                                 ),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 160,
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 15.0),
-                                      child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            // ElevatedButton(
-                                            //   // elevation: 5.0,
-                                            //   onPressed: () {
-                                            //     Navigator.pushReplacement(
-                                            //         context,
-                                            //         MaterialPageRoute(
-                                            //             builder: (context) =>
-                                            //                 page6()));
-                                            //   },
-                                            //   // padding: EdgeInsets.all(10.0),
-                                            //   // shape: RoundedRectangleBorder(
-                                            //   //   borderRadius:
-                                            //   //       BorderRadius.circular(30.0),
-                                            //   // ),
-                                            //   // color: Color.fromARGB(
-                                            //   //     255, 255, 255, 255),
-                                            //   child: Text(
-                                            //     'รายละเอียด',
-                                            //     style: TextStyle(
-                                            //       color:
-                                            //           Color.fromARGB(255, 0, 0, 0),
-                                            //       letterSpacing: 1,
-                                            //       fontSize: 15.0,
-                                            //       fontWeight: FontWeight.bold,
-                                            //       fontFamily: 'OpenSans',
-                                            //     ),
-                                            //   ),
-                                            // ),
-                                          ]),
-                                    ),
-                                  ],
-                                )),
+                                borderRadius: BorderRadius.circular(
+                                    10), // ขอบเขตรูปร่างของ Container
+                                image: DecorationImage(
+                                  image: AssetImage("assets/images/logo02.jpg"),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
                           ),
                           SizedBox(
                             height: 20,

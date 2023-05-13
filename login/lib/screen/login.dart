@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:login/%E0%B9%8AUser/%E0%B9%8AUser_home.dart';
 import 'package:login/%E0%B9%8AUser/User_register.dart';
@@ -26,7 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String user = 'jj@gmail.com';
     return Scaffold(
       // appBar: AppBar(
       //   title: Text("เข้าสู่ระบบ"),
@@ -148,36 +148,82 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: ElevatedButton(
                       // elevation: 5.0,
                       onPressed: () async {
-                        // print(profile.email);
-                        // user =  data["Email"];
-                        if ((profile.email == user)) {
-                          await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: profile.email!,
-                                  password: profile.password!)
-                              .then((value) {
-                            formKey.currentState!.reset();
-                            Navigator.pushReplacement(context,
-                                MaterialPageRoute(builder: (context) {
-                              controller.email(user);
+                        print(profile.email);
+                        print(profile.password);
+                        if (profile.email != null) {
+                          DocumentSnapshot docGetUserprofile =
+                              await FirebaseFirestore.instance
+                                  .collection('Userprofile')
+                                  .doc(profile.email)
+                                  .get();
+
+                          DocumentSnapshot docGetprofile =
+                              await FirebaseFirestore.instance
+                                  .collection('profile')
+                                  .doc(profile.email)
+                                  .get();
+
+                          // print(docGetprofile);
+                          if (docGetUserprofile.exists) {
+                            String passDocGetUserprofile =
+                                docGetUserprofile.get('Password');
+                            if (profile.password.toString() ==
+                                passDocGetUserprofile) {
+                              controller.email(profile.email.toString());
                               controller.user1;
-                              return MyApp2();
-                            }));
-                          });
-                        } else {
-                          await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: profile.email!,
-                                  password: profile.password!)
-                              .then((value) {
-                            formKey.currentState!.reset();
-                            Navigator.pushReplacement(context,
-                                MaterialPageRoute(builder: (context) {
-                              controller.email(profile.email!);
-                              return MyApp1();
-                            }));
-                          });
+                              // MyApp2();
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MyApp2()));
+                            }
+                          } else if (docGetprofile.exists) {
+                            String passDocGetprofile =
+                                docGetprofile.get('Password');
+                            if (profile.password.toString() ==
+                                passDocGetprofile) {
+                              controller.email(profile.email.toString());
+                              controller.user1;
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MyApp1()));
+                            }
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "ไม่มีEmailนี้หรือรหัสผ่านผิด",
+                                gravity: ToastGravity.TOP);
+                          }
                         }
+                        // user =  data["Email"];
+                        // if ((profile.email == user)) {
+                        //   await FirebaseAuth.instance
+                        //       .signInWithEmailAndPassword(
+                        //           email: profile.email!,
+                        //           password: profile.password!)
+                        //       .then((value) {
+                        //     formKey.currentState!.reset();
+                        //     Navigator.pushReplacement(context,
+                        //         MaterialPageRoute(builder: (context) {
+                        //       controller.email(user);
+                        //       controller.user1;
+                        //       return MyApp2();
+                        //     }));
+                        //   });
+                        // } else {
+                        //   await FirebaseAuth.instance
+                        //       .signInWithEmailAndPassword(
+                        //           email: profile.email!,
+                        //           password: profile.password!)
+                        //       .then((value) {
+                        //     formKey.currentState!.reset();
+                        //     Navigator.pushReplacement(context,
+                        //         MaterialPageRoute(builder: (context) {
+                        //       controller.email(profile.email!);
+                        //       return MyApp1();
+                        //     }));
+                        //   });
+                        // }
                       },
                       // padding: EdgeInsets.all(15.0),
                       // shape: RoundedRectangleBorder(
