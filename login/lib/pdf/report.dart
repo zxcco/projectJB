@@ -241,17 +241,21 @@ class _ReporttState extends State<Reportt> {
                       pw.Row(
                           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                           children: [
-                            pw.Text(productName[index].name.toString()),
-                            pw.SizedBox(
-                              width: 250,
-                            ),
-                            pw.Text(
-                              number[index].toString(),
-                            ),
-                            pw.Text("เเก้ว", style: pw.TextStyle(font: font3)),
-                            pw.Text(productName[index].price.toString(),
-                                style: pw.TextStyle()),
-                            pw.Text("บาท", style: pw.TextStyle(font: font3)),
+                            pw.Container(
+                                child: pw.Text(
+                                    productName[index].name.toString())),
+                            pw.Container(
+                                child: pw.Row(children: [
+                              pw.Text(
+                                number[index].toString(),
+                              ),
+                              pw.Text(" เเก้ว ",
+                                  style: pw.TextStyle(font: font3)),
+                              pw.Text(productName[index].price.toString(),
+                                  style: pw.TextStyle()),
+                              pw.Text(" บาท", style: pw.TextStyle(font: font3)),
+                            ]))
+
                             // pw.Text(number[index].toString()),
                           ]),
                     ]);
