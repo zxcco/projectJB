@@ -131,6 +131,9 @@ class _page4State extends State<page4> {
                           if (lastIndex == snapshot.data!.docs.length - 1) {
                             messageAA = messageA(snapshot.data);
                             // sendEmail(messageAA, messageBB);
+                            // print(dateNow(formattedDate) + "22222");
+                            // print(snapshot.data!.docs[lastIndex]["date"] +
+                            //     "111111");
                             if (dateNow(formattedDate) ==
                                 snapshot.data!.docs[lastIndex]["date"]) {
                               sendEmail(messageAA, messageBB);
