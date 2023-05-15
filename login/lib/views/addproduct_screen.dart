@@ -73,7 +73,7 @@ class _ProductSreenState extends State<ProductSreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "เพื่มเมนู",
+                      "เพิ่มเมนู",
                       style: TextStyle(
                         color: Colors.brown,
                         letterSpacing: 1,

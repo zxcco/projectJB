@@ -242,36 +242,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RegisterScreen()));
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: ' ไม่มีบัญชีพนักงาน ? ',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Schyler'),
-                          ),
-                          TextSpan(
-                            text: 'สมัครบัญชีพนักงาน',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Schyler'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+
                   GestureDetector(
                     onTap: () {
                       Navigator.pushReplacement(
@@ -282,14 +253,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: RichText(
                       text: TextSpan(
                         children: [
-                          TextSpan(
-                            text: ' ไม่มีบัญชีลูกค้า ? ',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Schyler'),
-                          ),
                           TextSpan(
                             text: 'สมัครบัญชีลูกค้า',
                             style: TextStyle(

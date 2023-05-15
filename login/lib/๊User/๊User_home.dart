@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login/%E0%B9%8AUser/User_sitting.dart';
+import 'package:login/%E0%B9%8AUser/page6User.dart';
 import 'package:login/screen2/page3User.dart';
 import 'User_page6.dart';
 
@@ -18,8 +19,8 @@ class _MyApp2State extends State<MyApp2> {
 
   List pages = [
     page3User(),
-    Userpage6(),
-    page4_1(),
+    page6User(),
+    // page4_1(),
   ];
 
   @override

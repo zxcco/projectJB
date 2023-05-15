@@ -32,6 +32,13 @@ class CartController1 extends GetxController {
     return user1;
   }
 
+  get emailUser => user2;
+  String user2 = "";
+  String emailUser1(String user) {
+    user2 = user;
+    return user2;
+  }
+
   void clearProduct() {
     _products.clear();
   }

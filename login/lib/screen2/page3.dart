@@ -3,8 +3,11 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:login/screen2/page6.dart';
 
+import '../111/cart_controllers.dart';
 import '../model/user.dart';
 
 class page3 extends StatefulWidget {
@@ -16,89 +19,33 @@ class _page3State extends State<page3> {
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
   CollectionReference _profilecollection =
       FirebaseFirestore.instance.collection("Userprofile");
-  TextEditingController _email_changeController = TextEditingController();
-  // TextEditingController _Phone_changeController = TextEditingController();
+  // TextEditingController _email_changeController = TextEditingController();
+  TextEditingController _Phone_changeController = TextEditingController();
   TextEditingController _price_changeController = TextEditingController();
+  final CartController1 controller = Get.put(CartController1());
 
-  Future<void> showMyDialog(BuildContext context) async {
-    DocumentSnapshot docGet = await FirebaseFirestore.instance
-        .collection('Userprofile')
-        .doc(_email_changeController.text)
-        .get();
-    Object? data = docGet.data();
-    String name = docGet.get('Name');
-    String Phone = docGet.get('Phone');
-    String monny = docGet.get('monny');
-    String Lastname = docGet.get('Lastname');
-    int one = int.parse(monny);
-    int two = int.parse(_price_changeController.text);
-    int tree = one + two;
-
+  Future<void> showMyDialog(BuildContext context, String name, String Lastname,
+      int one, int two, int tree, String email) async {
+    // print("jj@gmail.com" + " 111");
+    // print(controller.email1);
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('คุณ' + ' $name' + ' $Lastname'),
-          content: Text('ยอดเงินในบัญชี ' +
-              '$one' +
-              " บาท" +
-              '\n' +
-              "เติมเงินเพิ่ม " +
-              '$two' +
-              " บาท" +
-              '\n' +
-              "ยอดเงินคงเหลือ " +
-              '$tree' +
-              " บาท"),
+          title: Text('คุณ $name $Lastname'),
+          content: Text(
+              'ยอดเงินในบัญชี $one บาท\nเติมเงินเพิ่ม $two บาท\nยอดเงินคงเหลือ $tree บาท'),
           actions: [
             TextButton(
               onPressed: () async {
                 final aaa =
-                    FirebaseFirestore.instance.collection("Userprofile");
-                final bbbb = aaa.doc(_email_changeController.text);
-                bbbb.update({"monny": tree.toString()});
+                    FirebaseFirestore.instance.collection('Userprofile');
+                final bbbb = aaa.doc(email.toString().trim());
+                bbbb.update({'monny': tree.toString()});
                 Navigator.of(context).pop();
-                _email_changeController.text = '';
+                _Phone_changeController.text = '';
                 _price_changeController.text = '';
-                // _Phone_changeController.text = '';
-              },
-              child: Text('ปิด'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> showMyDialogEorer(BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('เบอร์โทรศัพท์ผิด'),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                Navigator.of(context).pop();
-              },
-              child: Text('ปิด'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> showMyDialogNoUser(BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('อีเมลนี้ไม่ใช่ลูกค้าในสมาชิก'),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                Navigator.of(context).pop();
+                controller.email('');
               },
               child: Text('ปิด'),
             ),
@@ -113,7 +60,7 @@ class _page3State extends State<page3> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('ไม่มีอีเมลนี้'),
+          title: Text('ไม่มีเบอร์นี้ในระบบ'),
           actions: [
             TextButton(
               onPressed: () async {
@@ -127,8 +74,37 @@ class _page3State extends State<page3> {
     );
   }
 
+  Future<void> fetchDataByPhone(String phone) async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('Userprofile')
+        .where('Phone', isEqualTo: phone)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      // พบเอกสารที่ตรงกับเงื่อนไข
+      DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+      Map<String, dynamic>? data =
+          documentSnapshot.data() as Map<String, dynamic>?;
+
+      if (data != null) {
+        // ดึงค่าข้อมูลจากเอกสาร
+        if (data.containsKey('Email')) {
+          String email = data['Email'] as String;
+          // ทำสิ่งที่ต้องการกับ email
+          controller.email(email);
+        }
+      } else {
+        // ไม่พบเอกสารที่ตรงกับเงื่อนไข
+        print('ไม่พบข้อมูลสำหรับเบอร์โทรศัพท์ที่ระบุ');
+      }
+    }
+  }
+
   @override
-  void initState() {}
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,16 +120,6 @@ class _page3State extends State<page3> {
           Container(
             child: ListView(
               children: [
-                // Padding(
-                //   padding: const EdgeInsets.fromLTRB(700, 42, 100, 0),
-                //   child: Text(
-                //     "ยอดเงินในบัตร",
-                //     style: TextStyle(
-                //         fontSize: 20,
-                //         color: Colors.white,
-                //         fontWeight: FontWeight.bold),
-                //   ),
-                // ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(650, 150, 40, 0),
                   child: SingleChildScrollView(
@@ -168,14 +134,18 @@ class _page3State extends State<page3> {
                                 child: Column(
                                   children: [
                                     TextFormField(
-                                      controller: _email_changeController,
+                                      controller: _Phone_changeController,
+                                      keyboardType:
+                                          TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
                                       decoration: InputDecoration(
-                                        labelText: 'Email',
+                                        labelText: 'เบอร์โทร',
                                         hintText: '',
                                         prefixIcon: SizedBox(
                                           height: 20,
                                           width: 20,
-                                          child: Icon(Icons.email),
+                                          child: Icon(Icons.phone),
                                         ),
                                         contentPadding: EdgeInsets.symmetric(
                                           vertical: 16,
@@ -208,7 +178,7 @@ class _page3State extends State<page3> {
                                       ),
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
-                                          return 'กรุณากรอกอีเมล';
+                                          return 'กรุณากรอกเบอร์โทร';
                                         }
                                         return null;
                                       },
@@ -216,54 +186,6 @@ class _page3State extends State<page3> {
                                     SizedBox(
                                       height: 20,
                                     ),
-                                    // TextFormField(
-                                    //   keyboardType:
-                                    //       TextInputType.numberWithOptions(
-                                    //     decimal: true,
-                                    //   ),
-                                    //   controller: _Phone_changeController,
-                                    //   decoration: InputDecoration(
-                                    //     labelText: 'เบอร์โทรศัพท์',
-                                    //     hintText: '',
-                                    //     prefixIcon: SizedBox(
-                                    //       height: 20,
-                                    //       width: 20,
-                                    //       child: Icon(Icons.password_sharp),
-                                    //     ),
-                                    //     contentPadding: EdgeInsets.symmetric(
-                                    //         vertical: 16, horizontal: 8),
-                                    //     border: OutlineInputBorder(
-                                    //       borderRadius:
-                                    //           BorderRadius.circular(10),
-                                    //       borderSide: BorderSide(
-                                    //         color: Colors.grey.shade100,
-                                    //         width: 1,
-                                    //       ),
-                                    //     ),
-                                    //     focusedBorder: OutlineInputBorder(
-                                    //       borderRadius:
-                                    //           BorderRadius.circular(10),
-                                    //       borderSide: BorderSide(
-                                    //         color: Colors.grey.shade100,
-                                    //         width: 2,
-                                    //       ),
-                                    //     ),
-                                    //     errorBorder: OutlineInputBorder(
-                                    //       borderRadius:
-                                    //           BorderRadius.circular(10),
-                                    //       borderSide: BorderSide(
-                                    //         color: Colors.red.shade600,
-                                    //         width: 2,
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    //   validator: (value) {
-                                    //     if (value == null || value.isEmpty) {
-                                    //       return 'เบอร์โทรศัพท์';
-                                    //     }
-                                    //     return null;
-                                    //   },
-                                    // ),
                                     SizedBox(
                                       height: 20,
                                     ),
@@ -320,41 +242,59 @@ class _page3State extends State<page3> {
                                     ),
                                     ElevatedButton(
                                       onPressed: () async {
-                                        if (_email_changeController.text ==
-                                                null ||
-                                            _email_changeController.text ==
-                                                ''.trim()) {
-                                          showMyDialogEmail(context);
-                                        } else {
-                                          DocumentSnapshot docGet =
+                                        // fetchDataByPhone(
+                                        //     _Phone_changeController.text);
+                                        try {
+                                          QuerySnapshot querySnapshot =
                                               await FirebaseFirestore.instance
                                                   .collection('Userprofile')
-                                                  .doc(_email_changeController
-                                                      .text)
+                                                  .where('Phone',
+                                                      isEqualTo:
+                                                          _Phone_changeController
+                                                              .text
+                                                              .trim())
                                                   .get();
-                                          if (docGet == null) {
-                                            showMyDialogNoUser(context);
+
+                                          if (querySnapshot.docs.isNotEmpty) {
+                                            DocumentSnapshot documentSnapshot =
+                                                querySnapshot.docs.first;
+                                            Map<String, dynamic>? data =
+                                                documentSnapshot.data()
+                                                    as Map<String, dynamic>?;
+                                            if (data!.containsKey('Email')) {
+                                              String email =
+                                                  data['Email'] as String;
+                                              String name =
+                                                  data['Name'] as String;
+                                              String phone =
+                                                  data['Phone'] as String;
+                                              String monny =
+                                                  data['monny'] as String;
+                                              String lastname =
+                                                  data['Lastname'] as String;
+                                              int one = int.parse(monny);
+                                              int two = int.parse(
+                                                  _price_changeController.text);
+                                              int tree = one + two;
+
+                                              if (_Phone_changeController
+                                                      .text ==
+                                                  phone) {
+                                                showMyDialog(
+                                                    context,
+                                                    name,
+                                                    lastname,
+                                                    one,
+                                                    two,
+                                                    tree,
+                                                    email);
+                                              }
+                                            }
+                                          } else {
+                                            showMyDialogEmail(context);
                                           }
-                                          // else {
-                                          // try {
-                                          //   Object? data = docGet.data();
-                                          //   String Phone =
-                                          //       docGet.get('Phone');
-                                          //   String monny =
-                                          //       docGet.get('monny');
-                                          //   String Lastname =
-                                          //       docGet.get('Lastname');
-                                          //   if (_Phone_changeController
-                                          //           .text ==
-                                          //       Phone) {
-                                          showMyDialog(context);
-                                          //   } else {
-                                          //     showMyDialogEorer(context);
-                                          //   }
-                                          // } catch (e) {
-                                          //   showMyDialogEorer(context);
-                                          // }
-                                          // }
+                                        } catch (e) {
+                                          showMyDialogEmail(context);
                                         }
                                       },
                                       child: Text(
@@ -367,7 +307,7 @@ class _page3State extends State<page3> {
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

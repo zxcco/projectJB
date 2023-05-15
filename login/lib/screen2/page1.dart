@@ -22,6 +22,39 @@ class _page1State extends State<page1> {
   final TextEditingController _priceController = TextEditingController();
   // final Storage storage =Storage();
   final firebaseInstance = FirebaseFirestore.instance;
+  Future<void> showMyDialogEorer(BuildContext context, String id) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Align(
+            alignment: Alignment.center,
+            child: Text('ต้องการลบหรือไม่'),
+          ),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('ปิด'),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    _delete(id);
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('ยืนยัน'),
+                ),
+              ],
+            )
+          ],
+        );
+      },
+    );
+  }
 
   final CollectionReference _products =
       FirebaseFirestore.instance.collection('products');
@@ -142,8 +175,8 @@ class _page1State extends State<page1> {
   Future<void> _delete(String productId) async {
     await _products.doc(productId).delete();
 
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('You have successfully deleted a product')));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('ลบเมนูสำเร็จ')));
   }
 
   @override
@@ -194,8 +227,10 @@ class _page1State extends State<page1> {
                                     onPressed: () => _update(documentSnapshot)),
                                 IconButton(
                                     icon: const Icon(Icons.delete),
-                                    onPressed: () =>
-                                        _delete(documentSnapshot.id)),
+                                    onPressed: () => showMyDialogEorer(
+                                        context, documentSnapshot.id)
+                                    // _delete(documentSnapshot.id)
+                                    ),
                               ],
                             ),
                           ),

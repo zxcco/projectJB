@@ -76,11 +76,6 @@ class _page3UserState extends State<page3User> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [],
-                        ),
-
                         GestureDetector(
                           child: Container(
                             width: 700,

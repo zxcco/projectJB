@@ -245,16 +245,35 @@ class _ReporttState extends State<Reportt> {
                                 child: pw.Text(
                                     productName[index].name.toString())),
                             pw.Container(
-                                child: pw.Row(children: [
-                              pw.Text(
-                                number[index].toString(),
-                              ),
-                              pw.Text(" เเก้ว ",
-                                  style: pw.TextStyle(font: font3)),
-                              pw.Text(productName[index].price.toString(),
-                                  style: pw.TextStyle()),
-                              pw.Text(" บาท", style: pw.TextStyle(font: font3)),
-                            ]))
+                                child: pw.Row(
+                              mainAxisAlignment: pw.MainAxisAlignment.end,
+                              children: [
+                                pw.Container(
+                                  width: 60,
+                                  child: pw.Row(
+                                      mainAxisAlignment:
+                                          pw.MainAxisAlignment.end,
+                                      children: [
+                                        pw.Text(number[index].toString()),
+                                        pw.Text(" เเก้ว ",
+                                            style: pw.TextStyle(font: font3)),
+                                      ]),
+                                ),
+                                pw.Container(
+                                  width: 60,
+                                  child: pw.Row(
+                                      mainAxisAlignment:
+                                          pw.MainAxisAlignment.end,
+                                      children: [
+                                        pw.Text(
+                                            productName[index].price.toString(),
+                                            style: pw.TextStyle()),
+                                        pw.Text(" บาท",
+                                            style: pw.TextStyle(font: font3)),
+                                      ]),
+                                ),
+                              ],
+                            ))
 
                             // pw.Text(number[index].toString()),
                           ]),
@@ -262,6 +281,7 @@ class _ReporttState extends State<Reportt> {
                   }),
                   pw.SizedBox(height: 80),
                   pw.Container(
+                    height: 80,
                     padding: const pw.EdgeInsets.symmetric(horizontal: 75),
                     child: pw.Row(
                         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,

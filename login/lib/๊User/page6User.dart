@@ -9,12 +9,12 @@ import 'package:login/screen/login.dart';
 
 import '../111/cart_controllers.dart';
 
-class page6 extends StatefulWidget {
+class page6User extends StatefulWidget {
   @override
-  _page6State createState() => _page6State();
+  _page6UserState createState() => _page6UserState();
 }
 
-class _page6State extends State<page6> {
+class _page6UserState extends State<page6User> {
   TextEditingController _pass_changeController = TextEditingController();
   TextEditingController _passNew_changeController = TextEditingController();
   TextEditingController _passNew1_changeController = TextEditingController();
@@ -23,7 +23,7 @@ class _page6State extends State<page6> {
   TextEditingController _phone_changeController = TextEditingController();
   final CartController1 controller = Get.put(CartController1());
   CollectionReference _profilecollection =
-      FirebaseFirestore.instance.collection("profile");
+      FirebaseFirestore.instance.collection("Userprofile");
   String? name;
   String? pass;
   String? lastName;
@@ -38,7 +38,7 @@ class _page6State extends State<page6> {
 
   Future<void> getData() async {
     DocumentSnapshot docGet = await FirebaseFirestore.instance
-        .collection('profile')
+        .collection('Userprofile')
         .doc(controller.user1)
         .get();
     setState(() {

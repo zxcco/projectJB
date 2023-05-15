@@ -101,11 +101,12 @@ class _MyApp1State extends State<MyApp1> {
                         ),
                         label: "member"),
                     BottomNavigationBarItem(
-                        icon: Icon(
-                          Icons.settings,
-                          size: 30,
-                        ),
-                        label: "ตั่งค่า"),
+                      icon: Icon(
+                        Icons.person,
+                        size: 30,
+                      ),
+                      label: "โปรไฟล์",
+                    )
                   ]),
             ),
 // Container(

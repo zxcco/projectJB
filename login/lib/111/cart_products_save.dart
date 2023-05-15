@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:login/111/cart_controllers.dart';
@@ -55,10 +56,32 @@ class CartProductCard extends StatelessWidget {
         Expanded(
           child: Text(product.name),
         ),
-        Text(
-            '${quantity} เเก้ว  ' +
-                '  ${controller.productSubtotal[index]} บาท',
-            style: TextStyle(fontFamily: "Schyler")),
+        Container(
+          child: Row(
+            children: [
+              Container(
+                width: 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text('${quantity} เเก้ว  ',
+                        style: TextStyle(fontFamily: "Schyler"))
+                  ],
+                ),
+              ),
+              Container(
+                width: 80,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text('  ${controller.productSubtotal[index]} บาท',
+                        style: TextStyle(fontFamily: "Schyler")),
+                  ],
+                ),
+              )
+            ],
+          ),
+        )
       ]),
     );
   }

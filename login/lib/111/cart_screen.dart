@@ -27,108 +27,6 @@ class CartScreen extends StatelessWidget {
     TextEditingController _email_changeController = TextEditingController();
     TextEditingController _phone_changeController = TextEditingController();
 
-    Future<void> showMyDialog1231(BuildContext context) async {
-      DocumentSnapshot docGet = await FirebaseFirestore.instance
-          .collection('Userprofile')
-          .doc(_email_changeController.text)
-          .get();
-      Object? data = docGet.data();
-      String name = docGet.get('Name');
-      String Phone = docGet.get('Phone');
-      String monny = docGet.get('monny');
-      String Lastname = docGet.get('Lastname');
-      int one = int.parse(monny);
-      int two = int.parse(controller.total);
-      int tree = one - two;
-      double monny1 = double.parse(monny);
-      var text_price1 = double.parse(controller.total);
-      if (monny1 >= text_price1) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('คุณ' + ' $name' + ' $Lastname'),
-              content: Text('ยอดเงินในบัญชี ' +
-                  '$one' +
-                  " บาท" +
-                  '\n' +
-                  "จำนวนเงิน " +
-                  controller.total +
-                  " บาท" +
-                  '\n' +
-                  "ยอดเงินคงเหลือ " +
-                  '$tree' +
-                  " บาท"),
-              actions: [
-                TextButton(
-                  onPressed: () async {
-                    final aaa =
-                        FirebaseFirestore.instance.collection("Userprofile");
-                    final bbbb = aaa.doc(_email_changeController.text);
-                    bbbb.update({"monny": tree.toString()});
-                    Navigator.of(context).pop();
-                    _email_changeController.text = '';
-                    _price_changeController.text = '';
-                    _phone_changeController.text = '';
-                  },
-                  child: Text('ปิด'),
-                ),
-              ],
-            );
-          },
-        );
-      } else {}
-    }
-
-    sss() async {
-      DocumentSnapshot docGet = await FirebaseFirestore.instance
-          .collection('Userprofile')
-          .doc(_email_changeController.text)
-          .get();
-      Object? data = docGet.data();
-      String name = docGet.get('Name');
-      String Phone = docGet.get('Phone');
-      String monny = docGet.get('monny');
-      String Lastname = docGet.get('Lastname');
-      int one = int.parse(monny);
-      int two = int.parse(controller.total);
-      int tree = one - two;
-
-      Future<void> showMyDialog() => showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('คุณ' + ' $name' + ' $Lastname'),
-                content: Text('ยอดเงินในบัญชี ' +
-                    '$one' +
-                    " บาท" +
-                    '\n' +
-                    "จำนวนเงิน " +
-                    controller.total +
-                    " บาท" +
-                    '\n' +
-                    "ยอดเงินคงเหลือ " +
-                    '$tree' +
-                    " บาท"),
-                actions: [
-                  TextButton(
-                    onPressed: () async {
-                      final aaa =
-                          FirebaseFirestore.instance.collection("Userprofile");
-                      final bbbb = aaa.doc(_email_changeController.text);
-                      bbbb.update({"monny": tree.toString()});
-                      Navigator.of(context).pop();
-                      _email_changeController.text = '';
-                      _price_changeController.text = '';
-                    },
-                    child: Text('ปิด'),
-                  ),
-                ],
-              );
-            },
-          );
-    }
-
     Future showMyDialogMomonNy(
             int one, int tree, String name, String Lastname) =>
         showDialog(
@@ -166,7 +64,46 @@ class CartScreen extends StatelessWidget {
           },
         );
 
-    Future showMyDialog123(int one, int tree, String name, String Lastname) =>
+    Future<void> showMyDialogEmail(BuildContext context) async {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('ไม่มีเบอร์นี้ในระบบ'),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                },
+                child: Text('ปิด'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    showMyDialogPrice(BuildContext context, String price) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('ทอนเงินจำนวน ' + price + ' บาท'),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                },
+                child: Text('ปิด'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    Future showMyDialog123(
+            int one, int tree, String name, String Lastname, String email) =>
         showDialog(
             context: context,
             builder: (context) => AlertDialog(
@@ -188,7 +125,7 @@ class CartScreen extends StatelessWidget {
                         if (tree >= 0) {
                           final aaa = FirebaseFirestore.instance
                               .collection("Userprofile");
-                          final bbbb = aaa.doc(_email_changeController.text);
+                          final bbbb = aaa.doc(email.trim());
                           bbbb.update({"monny": tree.toString()});
                           Navigator.of(context).pop();
                           _email_changeController.text = '';
@@ -219,11 +156,14 @@ class CartScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       TextField(
-                        controller: _email_changeController,
+                        controller: _phone_changeController,
+                        keyboardType: TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
                         decoration: InputDecoration(
-                          labelText: 'Email',
-                          hintText: 'Email',
-                          prefixIcon: Icon(Icons.attach_money),
+                          labelText: 'เบอร์โทร',
+                          hintText: 'เบอร์โทร',
+                          prefixIcon: Icon(Icons.phone),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(
@@ -251,37 +191,6 @@ class CartScreen extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      // TextField(
-                      //   keyboardType:
-                      //       TextInputType.numberWithOptions(decimal: true),
-                      //   controller: _phone_changeController,
-                      //   decoration: InputDecoration(
-                      //     labelText: 'เบอร์โทร',
-                      //     hintText: 'เบอร์โทร',
-                      //     prefixIcon: Icon(Icons.attach_money),
-                      //     border: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(10),
-                      //       borderSide: BorderSide(
-                      //         color: Colors.grey.shade400,
-                      //         width: 1,
-                      //       ),
-                      //     ),
-                      //     focusedBorder: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(10),
-                      //       borderSide: BorderSide(
-                      //         color: Colors.blue.shade600,
-                      //         width: 2,
-                      //       ),
-                      //     ),
-                      //     errorBorder: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(10),
-                      //       borderSide: BorderSide(
-                      //         color: Colors.red.shade600,
-                      //         width: 2,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
@@ -289,110 +198,130 @@ class CartScreen extends StatelessWidget {
               actions: [
                 TextButton(
                   onPressed: () async {
-                    DocumentSnapshot docGet = await FirebaseFirestore.instance
-                        .collection('Userprofile')
-                        .doc(_email_changeController.text)
-                        .get();
-                    Object? data = docGet.data();
-                    String name = docGet.get('Name');
-                    String Phone = docGet.get('Phone');
-                    String monny = docGet.get('monny');
-                    String Lastname = docGet.get('Lastname');
-                    int one = int.parse(monny);
-                    int two = int.parse(controller.total);
-                    int tree = one - two;
-                    int price123 = 0;
-                    double monny1 = double.parse(monny);
-                    var text_price1 = int.parse(controller.total);
-                    if (monny1 >= text_price1) {
-                      var text_price1 = int.parse(controller.total);
-                      final snackBar = SnackBar(
-                        content: Text('คิดเงินสำเร็จ'),
-                        action: SnackBarAction(
-                          label: '',
-                          onPressed: () {},
-                        ),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    // fetchDataByPhone(
+                    //     _Phone_changeController.text);
+                    try {
+                      QuerySnapshot querySnapshot = await FirebaseFirestore
+                          .instance
+                          .collection('Userprofile')
+                          .where('Phone',
+                              isEqualTo: _phone_changeController.text
+                                  .toString()
+                                  .trim())
+                          .get();
+                      if (querySnapshot.docs.isNotEmpty) {
+                        DocumentSnapshot documentSnapshot =
+                            querySnapshot.docs.first;
+                        Map<String, dynamic>? data =
+                            documentSnapshot.data() as Map<String, dynamic>?;
+                        if (data!.containsKey('Email')) {
+                          String email = data['Email'] as String;
+                          String name = data['Name'] as String;
+                          String phone = data['Phone'] as String;
+                          String monny = data['monny'] as String;
+                          String lastname = data['Lastname'] as String;
+                          // showMyDialog(
+                          //     context,
+                          //     name,
+                          //     lastname,
+                          //     one,
+                          //     two,
+                          //     tree,
+                          //     email);
+                          //------------------------------------------------------------------------------
 
-                      late List<Product> productName = [];
-                      // var a;
-                      // for (int i = 0; i < controller.products().length; i++) {
-                      //   a = _saveProduct.where((productName) =>
-                      //       productName = controller.productName[i]);
-                      // }
-                      // print(a);
-                      // DocumentSnapshot docGet = await FirebaseFirestore.instance
-                      //     .collection('saveProduct')
-                      //     .doc("2023-04-23")
-                      //     .get();
-
-                      for (int i = 0; i < controller.products().length; i++) {
-                        // _saveProduct
-                        //     .doc(formattedDate)
-                        //     .collection(controller.productName[i])
-                        //     .doc("info")
-                        //     .set({
-                        //   "Name": controller.productName[i],
-                        //   "price": controller.productSubtotal[i],
-                        //   "number": controller.products().values.toList()[i]
-                        // });
-                        final String formattedDate =
-                            DateFormat('yyyy-MM-dd').format(DateTime.now());
-                        DocumentSnapshot snapshot = await FirebaseFirestore
-                            .instance
-                            .collection('saveProduct')
-                            .doc(formattedDate)
-                            .collection('info')
-                            .doc(controller.productName[i])
-                            .get();
-                        if (snapshot.exists) {
-                          if (snapshot.get('Name') ==
-                              controller.productName[i]) {
-                            _saveProduct
-                                .doc(formattedDate)
-                                .collection("info")
-                                .doc(controller.productName[i])
-                                .set({
-                              "Name": controller.productName[i],
-                              "price": controller.productSubtotal[i] +
-                                  snapshot.get('price'),
-                              "number":
-                                  controller.products().values.toList()[i] +
-                                      snapshot.get('number'),
-                              "date": formattedDate
-                            });
+                          int one = int.parse(monny);
+                          int two = int.parse(controller.total);
+                          int tree = one - two;
+                          int price123 = 0;
+                          double monny1 = double.parse(monny);
+                          var text_price1 = int.parse(controller.total);
+                          if (monny1 >= text_price1) {
+                            var text_price1 = int.parse(controller.total);
+                            final snackBar = SnackBar(
+                              content: Text('คิดเงินสำเร็จ'),
+                              action: SnackBarAction(
+                                label: '',
+                                onPressed: () {},
+                              ),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                            late List<Product> productName = [];
+                            for (int i = 0;
+                                i < controller.products().length;
+                                i++) {
+                              final String formattedDate =
+                                  DateFormat('yyyy-MM-dd')
+                                      .format(DateTime.now());
+                              DocumentSnapshot snapshot =
+                                  await FirebaseFirestore.instance
+                                      .collection('saveProduct')
+                                      .doc(formattedDate)
+                                      .collection('info')
+                                      .doc(controller.productName[i])
+                                      .get();
+                              if (snapshot.exists) {
+                                if (snapshot.get('Name') ==
+                                    controller.productName[i]) {
+                                  _saveProduct
+                                      .doc(formattedDate)
+                                      .collection("info")
+                                      .doc(controller.productName[i])
+                                      .set({
+                                    "Name": controller.productName[i],
+                                    "price": controller.productSubtotal[i] +
+                                        snapshot.get('price'),
+                                    "number": controller
+                                            .products()
+                                            .values
+                                            .toList()[i] +
+                                        snapshot.get('number'),
+                                    "date": formattedDate
+                                  });
+                                }
+                              } else {
+                                _saveProduct
+                                    .doc(formattedDate)
+                                    .collection("info")
+                                    .doc(controller.productName[i])
+                                    .set({
+                                  "Name": controller.productName[i],
+                                  "price": controller.productSubtotal[i],
+                                  "number":
+                                      controller.products().values.toList()[i],
+                                  "date": formattedDate
+                                });
+                              }
+                            }
+                            Navigator.of(context).pop();
+                          } else {
+                            final snackBar = SnackBar(
+                              content: Text('จำนวนเงินไม่พอ'),
+                              action: SnackBarAction(
+                                label: '',
+                                onPressed: () {},
+                              ),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                           }
-                        } else {
-                          _saveProduct
-                              .doc(formattedDate)
-                              .collection("info")
-                              .doc(controller.productName[i])
-                              .set({
-                            "Name": controller.productName[i],
-                            "price": controller.productSubtotal[i],
-                            "number": controller.products().values.toList()[i],
-                            "date": formattedDate
-                          });
+                          Navigator.of(context).pop();
+                          showMyDialog123(one, tree, name, lastname, email);
+                          price123 = 0;
+
+                          //-----------------------------------------------------------------------------------------
                         }
+                      } else {
+                        showMyDialogEmail(context);
                       }
-
-                      Navigator.of(context).pop();
-                    } else {
-                      final snackBar = SnackBar(
-                        content: Text('จำนวนเงินไม่พอ'),
-                        action: SnackBarAction(
-                          label: '',
-                          onPressed: () {},
-                        ),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    } catch (e) {
+                      showMyDialogEmail(context);
                     }
-                    Navigator.of(context).pop();
-                    showMyDialog123(one, tree, name, Lastname);
-
-                    price123 = 0;
                   },
+                  //---------------------------------------------------------------------------
+
+                  //--------------------------------------------------------------------------
                   child: const Text("คำนวน"),
                 ),
               ],
@@ -457,37 +386,8 @@ class CartScreen extends StatelessWidget {
                     if (price! >= text_price1) {
                       var text_price1 = int.parse(controller.total);
                       price123 = price - text_price1;
-                      final snackBar = SnackBar(
-                        content: Text('ทอนเงิน $price123 บาท'),
-                        action: SnackBarAction(
-                          label: '',
-                          onPressed: () {},
-                        ),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
                       late List<Product> productName = [];
-                      // var a;
-                      // for (int i = 0; i < controller.products().length; i++) {
-                      //   a = _saveProduct.where((productName) =>
-                      //       productName = controller.productName[i]);
-                      // }
-                      // print(a);
-                      // DocumentSnapshot docGet = await FirebaseFirestore.instance
-                      //     .collection('saveProduct')
-                      //     .doc("2023-04-23")
-                      //     .get();
-
                       for (int i = 0; i < controller.products().length; i++) {
-                        // _saveProduct
-                        //     .doc(formattedDate)
-                        //     .collection(controller.productName[i])
-                        //     .doc("info")
-                        //     .set({
-                        //   "Name": controller.productName[i],
-                        //   "price": controller.productSubtotal[i],
-                        //   "number": controller.products().values.toList()[i]
-                        // });
                         final String formattedDate =
                             DateFormat('yyyy-MM-dd').format(DateTime.now());
                         DocumentSnapshot snapshot = await FirebaseFirestore
@@ -542,6 +442,7 @@ class CartScreen extends StatelessWidget {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     }
                     Navigator.of(context).pop();
+                    showMyDialogPrice(context, price123.toString());
                     price123 = 0;
                   },
                   child: const Text("คำนวน"),
