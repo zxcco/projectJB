@@ -500,9 +500,9 @@ class CartScreen extends StatelessWidget {
                 height: 5,
               ),
               Text('JIDDY ROASTERS COFFEE SHOP',
-                  style: TextStyle(fontFamily: "Schyler")),
+                  style: TextStyle(fontFamily: "Schyler", fontSize: 22)),
               Text('Phone 0814696645.',
-                  style: TextStyle(fontFamily: "Schyler")),
+                  style: TextStyle(fontFamily: "Schyler", fontSize: 22)),
               SizedBox(
                 height: 10,
               ),

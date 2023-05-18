@@ -15,7 +15,7 @@ class CartProductsSave1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => SizedBox(
-        height: 500,
+        height: 470,
         child: ListView.builder(
             itemCount: controller.products.length,
             itemBuilder: (BuildContext context, int index) {
@@ -54,7 +54,10 @@ class CartProductCard extends StatelessWidget {
           width: 20,
         ),
         Expanded(
-          child: Text(product.name),
+          child: Text(
+            product.name,
+            style: TextStyle(fontSize: 18),
+          ),
         ),
         Container(
           child: Row(
@@ -65,7 +68,7 @@ class CartProductCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text('${quantity} เเก้ว  ',
-                        style: TextStyle(fontFamily: "Schyler"))
+                        style: TextStyle(fontFamily: "Schyler", fontSize: 18))
                   ],
                 ),
               ),
@@ -75,7 +78,7 @@ class CartProductCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text('  ${controller.productSubtotal[index]} บาท',
-                        style: TextStyle(fontFamily: "Schyler")),
+                        style: TextStyle(fontFamily: "Schyler", fontSize: 22)),
                   ],
                 ),
               )

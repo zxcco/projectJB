@@ -130,14 +130,14 @@ class _page4State extends State<page4> {
                           // print(snapshot.data!.docs.length);
                           if (lastIndex == snapshot.data!.docs.length - 1) {
                             messageAA = messageA(snapshot.data);
-                            // sendEmail(messageAA, messageBB);
-                            // print(dateNow(formattedDate) + "22222");
-                            // print(snapshot.data!.docs[lastIndex]["date"] +
-                            //     "111111");
-                            if (dateNow(formattedDate) ==
-                                snapshot.data!.docs[lastIndex]["date"]) {
-                              sendEmail(messageAA, messageBB);
-                            }
+                            sendEmail(messageAA, messageBB);
+                            print(dateNow(formattedDate) + "22222");
+                            print(snapshot.data!.docs[lastIndex]["date"] +
+                                "111111");
+                            // if (dateNow(formattedDate) ==
+                            //     snapshot.data!.docs[lastIndex]["date"]) {
+                            //   sendEmail(messageAA, messageBB);
+                            // }
                             // for (int i = 0; i < messageAA.length; i++) {
                             //   print(messageAA.length);
                             // }

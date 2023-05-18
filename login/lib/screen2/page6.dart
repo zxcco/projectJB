@@ -32,11 +32,17 @@ class _page6State extends State<page6> {
   @override
   void initState() {
     super.initState();
-    getData();
+    String aaaaa = "";
+    getData(aaaaa);
     print(controller.user1);
   }
 
-  Future<void> getData() async {
+  void showNameChangeSuccessSnackBar(BuildContext context, String name) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text('เเก้ไข' + name + 'สำเร็จ')));
+  }
+
+  Future<void> getData(String? name123) async {
     DocumentSnapshot docGet = await FirebaseFirestore.instance
         .collection('profile')
         .doc(controller.user1)
@@ -47,7 +53,17 @@ class _page6State extends State<page6> {
       lastName = docGet.get('Lastname');
       Phone = docGet.get('Phone');
     });
+    if (name123 != null) {
+      if (name123 == "ชื่อ" ||
+          name123 == "นามสกุล" ||
+          name123 == "เบอร์โทร" ||
+          name123 == "รหัสผ่าน") {
+        showNameChangeSuccessSnackBar(context, name123!);
+      }
+    }
   }
+
+  bool _isSecurePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -234,7 +250,8 @@ class _page6State extends State<page6> {
                                 _profilecollection.doc(controller.user1);
                             bbbb.update({"Name": _name_changeController.text});
                             _name_changeController.text = '';
-                            getData();
+                            String name123 = "ชื่อ";
+                            getData(name123);
                             Navigator.of(context).pop();
                           },
                           child: Text("ยืนยัน")),
@@ -327,7 +344,8 @@ class _page6State extends State<page6> {
                             bbbb.update(
                                 {"Lastname": _last_changeController.text});
                             _last_changeController.text = '';
-                            getData();
+                            String name123 = "นามสกุล";
+                            getData(name123);
                             Navigator.of(context).pop();
                           },
                           child: Text("ยืนยัน")),
@@ -422,7 +440,8 @@ class _page6State extends State<page6> {
                             bbbb.update(
                                 {"Phone": _phone_changeController.text});
                             _phone_changeController.text = '';
-                            getData();
+                            String name123 = "เบอร์โทร";
+                            getData(name123);
                             Navigator.of(context).pop();
                           },
                           child: Text("ยืนยัน")),
@@ -470,6 +489,7 @@ class _page6State extends State<page6> {
                       keyboardType: TextInputType.numberWithOptions(
                         decimal: true,
                       ),
+                      obscureText: _isSecurePassword,
                       controller: _pass_changeController,
                       decoration: InputDecoration(
                         labelText: 'รหัสผ่านเดิม',
@@ -517,6 +537,7 @@ class _page6State extends State<page6> {
                       keyboardType: TextInputType.numberWithOptions(
                         decimal: true,
                       ),
+                      obscureText: _isSecurePassword,
                       controller: _passNew_changeController,
                       decoration: InputDecoration(
                         labelText: 'รหัสผ่านใหม่',
@@ -565,6 +586,7 @@ class _page6State extends State<page6> {
                         decimal: true,
                       ),
                       controller: _passNew1_changeController,
+                      obscureText: _isSecurePassword,
                       decoration: InputDecoration(
                         labelText: 'รหัสผ่านใหม่',
                         hintText: '',
@@ -627,6 +649,11 @@ class _page6State extends State<page6> {
                                 });
                               }
                             }
+                            String name123 = "รหัสผ่าน";
+                            getData(name123);
+                            _pass_changeController.text = '';
+                            _passNew_changeController.text = '';
+                            _passNew1_changeController.text = '';
                             Navigator.of(context).pop();
                           },
                           child: Text("ยืนยัน")),

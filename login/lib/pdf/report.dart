@@ -82,7 +82,8 @@ class _ReporttState extends State<Reportt> {
     final font2 = await PdfGoogleFonts.openSansBold();
     final font3 = await PdfGoogleFonts.notoSansThaiRegular(); // ฟอนต์ภาษาไทย
     final font4 = await PdfGoogleFonts.notoSansThaiBold(); // ฟอนต์ภาษาไทย
-    String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    String formattedDate =
+        DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
 
     DocumentSnapshot docGet = await FirebaseFirestore.instance
         .collection('profile')
