@@ -123,7 +123,11 @@ class _ProductSreenState extends State<ProductSreen> {
                 ),
                 ProductImagePicker(_pickedImage),
                 ElevatedButton(
-                  onPressed: addProduct,
+                  onPressed: () {
+                    addProduct();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('เพิ่มเมนูสำเร็จ')));
+                  },
                   child: Text('เพิ่มเมนู'),
                 ),
               ],

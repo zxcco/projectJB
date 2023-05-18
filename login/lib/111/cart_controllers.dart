@@ -39,6 +39,13 @@ class CartController1 extends GetxController {
     return user2;
   }
 
+  get login => login2;
+  String login2 = "";
+  String loginfuntion(String date) {
+    login2 = date;
+    return login2;
+  }
+
   void clearProduct() {
     _products.clear();
   }

@@ -18,15 +18,19 @@ class page4 extends StatefulWidget {
   State<page4> createState() => _page4State();
 }
 
+final CartController1 controller = Get.put(CartController1());
+
 class _page4State extends State<page4> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    print(controller.login);
   }
 
   List<String> messageBB = [];
   List<String> messageAA = [];
+  List<String> messageCC = [];
 
   String dateNow(String formattedDate) {
     return formattedDate.split('-')[0] +
@@ -89,10 +93,11 @@ class _page4State extends State<page4> {
                           if (lastIndex == snapshot.data!.docs.length - 1) {
                             messageB(snapshot.data);
                             messageBB = messageB(snapshot.data);
-                            // if (dateNow(formattedDate) ==
-                            //     snapshot1.data!.docs[lastIndex]["date"]) {
-                            //   sendEmail(message, messageNaYai);
-                            // }
+                            // sendEmail(messageAA, messageBB, messageCC);
+                            if (dateNow(formattedDate) ==
+                                snapshot.data!.docs[lastIndex]["date"]) {
+                              sendEmail(messageAA, messageBB, messageCC);
+                            }
                           }
                           // print(messageNaYai.join("\n"));
                           // print(dateNow(formattedDate));
@@ -130,7 +135,55 @@ class _page4State extends State<page4> {
                           // print(snapshot.data!.docs.length);
                           if (lastIndex == snapshot.data!.docs.length - 1) {
                             messageAA = messageA(snapshot.data);
-                            sendEmail(messageAA, messageBB);
+                            // sendEmail(messageAA, messageBB, messageCC);
+                            print(dateNow(formattedDate) + "22222");
+                            print(snapshot.data!.docs[lastIndex]["date"] +
+                                "111111");
+                            // if (dateNow(formattedDate) ==
+                            //     snapshot.data!.docs[lastIndex]["date"]) {
+                            //   sendEmail(messageAA, messageBB);
+                            // }
+                            // for (int i = 0; i < messageAA.length; i++) {
+                            //   print(messageAA.length);
+                            // }
+                            // print(messageAA);
+                          }
+                          // for (int i = 0; i < snapshot.data!.docs.length; i++) {
+                          //   print(snapshot.data!.docs[i]["Name"]);
+                          // }
+
+                          // print(dateNow(formattedDate));
+                        });
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
+            ),
+            Container(
+              width: 0,
+              height: 0,
+              child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("eventlog")
+                    .doc(formattedDate)
+                    .collection('info')
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (context, index)
+                            // => Container(
+                            //       child: Text(snapshot.data?.docs[index]["Name"]),
+                            //     )
+                            {
+                          final lastIndex = snapshot.data!.docs.length - 1;
+                          // messageA(snapshot.data);
+                          // print(snapshot.data!.docs.length);
+                          if (lastIndex == snapshot.data!.docs.length - 1) {
+                            messageCC = messageC(snapshot.data);
+                            // sendEmail(messageAA, messageBB, messageCC);
                             print(dateNow(formattedDate) + "22222");
                             print(snapshot.data!.docs[lastIndex]["date"] +
                                 "111111");
@@ -208,7 +261,24 @@ List<String> messageB(QuerySnapshot<Object?>? data) {
   return messageNaYai;
 }
 
-sendEmail(List<String> message, List<String> messageNaYai) async {
+List<String> messageC(QuerySnapshot<Object?>? data) {
+  double totalPrice = 0;
+  List<String> messageNaYai = ["\n"];
+  for (int i = 0; i < data!.docs.length; i++) {
+    messageNaYai.add(" ชื่อ : " +
+        data.docs[i]["Name"] +
+        " นามสกุล : " +
+        data.docs[i]["LastName"] +
+        " วันที่ : " +
+        data.docs[i]["dateIn"] +
+        " - " +
+        data.docs[i]["dateOut"]);
+  }
+  return messageNaYai;
+}
+
+sendEmail(List<String> message, List<String> messageNaYai,
+    List<String> messageCC) async {
   final url = Uri.parse("https://api.emailjs.com/api/v1.0/email/send");
   final service_id = "service_lqhozk2";
   final template_id = "template_5ii629m";
@@ -230,7 +300,8 @@ sendEmail(List<String> message, List<String> messageNaYai) async {
           "user_name": 'hello',
           "to_email": to_email,
           "message": message.join("\n"),
-          "messageNaYai": messageNaYai.join("\n")
+          "messageNaYai": messageNaYai.join("\n"),
+          "messageCC": messageCC.join("\n")
         }
       }));
 

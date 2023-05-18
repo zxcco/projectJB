@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:login/screen/login.dart';
+import 'package:intl/intl.dart';
 
 import '../111/cart_controllers.dart';
 
@@ -28,7 +29,9 @@ class _page6State extends State<page6> {
   String? pass;
   String? lastName;
   String? Phone;
-
+  String formattedDate =
+      DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+  String formatted = DateFormat('yyyy-MM-dd').format(DateTime.now());
   @override
   void initState() {
     super.initState();
@@ -155,11 +158,19 @@ class _page6State extends State<page6> {
                     "ออกจากระบบ",
                     style: TextStyle(fontSize: 20),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    FirebaseFirestore firestore = FirebaseFirestore.instance;
+                    DocumentReference eventLogRef =
+                        await firestore.collection('eventlog').doc(formatted);
+                    await eventLogRef.collection('info').add({
+                      "Name": name,
+                      "LastName": lastName,
+                      "dateIn": controller.login,
+                      "dateOut": formattedDate
+                    });
+
                     Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) {
-                      return LoginScreen();
-                    }));
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
                   },
                 ),
               ),

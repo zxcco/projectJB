@@ -13,6 +13,7 @@ import 'package:login/screen/register.dart';
 import '../111/cart_controllers.dart';
 import '../screen2/home2.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -22,9 +23,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
   final CartController1 controller = Get.put(CartController1());
-
+  String formattedDate =
+      DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
   Profile profile = Profile();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -183,7 +184,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (profile.password.toString() ==
                                 passDocGetprofile) {
                               controller.email(profile.email.toString());
+                              controller.loginfuntion(formattedDate.toString());
                               controller.user1;
+                              controller.login2;
+                              print(controller
+                                      .loginfuntion(formattedDate)
+                                      .toString() +
+                                  '11111111111111111111111111');
+                              print(formattedDate.toString() + '222222222222');
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(

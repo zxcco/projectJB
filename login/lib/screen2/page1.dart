@@ -161,6 +161,8 @@ class _page1State extends State<page1> {
                             documentSnapshot['price'] == null) {
                           updateProduct(_UpUserImageFile);
                         }
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('เเก้ไขเมนูสำเร็จ')));
                         Navigator.of(context).pop();
                       }
                     },
