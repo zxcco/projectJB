@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:login/views/addproduct_screen.dart';
 import 'package:login/views/product_image_picker.dart';
@@ -161,8 +162,9 @@ class _page1State extends State<page1> {
                             documentSnapshot['price'] == null) {
                           updateProduct(_UpUserImageFile);
                         }
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('เเก้ไขเมนูสำเร็จ')));
+                        Fluttertoast.showToast(
+                            msg: "เเก้ไขเมนูสำเร็จ", gravity: ToastGravity.TOP);
+
                         Navigator.of(context).pop();
                       }
                     },
@@ -176,9 +178,7 @@ class _page1State extends State<page1> {
 
   Future<void> _delete(String productId) async {
     await _products.doc(productId).delete();
-
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('ลบเมนูสำเร็จ')));
+    Fluttertoast.showToast(msg: "ลบเมนูสำเร็จ", gravity: ToastGravity.TOP);
   }
 
   @override

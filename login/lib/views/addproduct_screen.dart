@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:login/views/data_controller.dart';
 import 'package:login/views/product_image_picker.dart';
@@ -125,8 +126,8 @@ class _ProductSreenState extends State<ProductSreen> {
                 ElevatedButton(
                   onPressed: () {
                     addProduct();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('เพิ่มเมนูสำเร็จ')));
+                    Fluttertoast.showToast(
+                        msg: "เพิ่มเมนูสำเร็จ", gravity: ToastGravity.TOP);
                   },
                   child: Text('เพิ่มเมนู'),
                 ),

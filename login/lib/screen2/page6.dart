@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:login/screen/login.dart';
@@ -41,8 +42,8 @@ class _page6State extends State<page6> {
   }
 
   void showNameChangeSuccessSnackBar(BuildContext context, String name) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('เเก้ไข' + name + 'สำเร็จ')));
+    Fluttertoast.showToast(
+        msg: 'เเก้ไข' + name + 'สำเร็จ', gravity: ToastGravity.TOP);
   }
 
   Future<void> getData(String? name123) async {

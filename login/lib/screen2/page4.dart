@@ -26,6 +26,7 @@ class _page4State extends State<page4> {
     // TODO: implement initState
     super.initState();
     print(controller.login);
+    check = true;
   }
 
   List<String> messageBB = [];
@@ -41,7 +42,7 @@ class _page4State extends State<page4> {
   }
 
   final String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
-
+  bool check = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,11 +94,6 @@ class _page4State extends State<page4> {
                           if (lastIndex == snapshot.data!.docs.length - 1) {
                             messageB(snapshot.data);
                             messageBB = messageB(snapshot.data);
-                            // sendEmail(messageAA, messageBB, messageCC);
-                            if (dateNow(formattedDate) ==
-                                snapshot.data!.docs[lastIndex]["date"]) {
-                              sendEmail(messageAA, messageBB, messageCC);
-                            }
                           }
                           // print(messageNaYai.join("\n"));
                           // print(dateNow(formattedDate));
@@ -105,6 +101,34 @@ class _page4State extends State<page4> {
 
                           //-----------------------------------------------------------------------------------------------------------------------------//
                           //------------------------------------------------------------------------------------------------------------------------------------------//
+                        });
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
+            ),
+            Container(
+              width: 0,
+              height: 0,
+              child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("eventlog")
+                    .doc(formattedDate)
+                    .collection('info')
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          final lastIndex = snapshot.data!.docs.length - 1;
+                          if (lastIndex == snapshot.data!.docs.length - 1) {
+                            messageCC = messageC(snapshot.data);
+                            print(dateNow(formattedDate) + "22222");
+                            print(snapshot.data!.docs[lastIndex]["date"] +
+                                "111111");
+                          }
                         });
                   } else {
                     return Container();
@@ -139,10 +163,18 @@ class _page4State extends State<page4> {
                             print(dateNow(formattedDate) + "22222");
                             print(snapshot.data!.docs[lastIndex]["date"] +
                                 "111111");
-                            // if (dateNow(formattedDate) ==
-                            //     snapshot.data!.docs[lastIndex]["date"]) {
-                            //   sendEmail(messageAA, messageBB);
-                            // }
+                            if (check == true) {
+                              print(dateNow(formattedDate) + "33333");
+                              if (dateNow(formattedDate) ==
+                                  snapshot.data!.docs[lastIndex]["date"]) {
+                                sendEmail(messageAA, messageBB);
+                                sendEmail1(messageCC);
+                                check = false;
+                              }
+                            } else {
+                              print(dateNow(formattedDate) + "33333");
+                            }
+
                             // for (int i = 0; i < messageAA.length; i++) {
                             //   print(messageAA.length);
                             // }
@@ -160,54 +192,6 @@ class _page4State extends State<page4> {
                 },
               ),
             ),
-            Container(
-              width: 0,
-              height: 0,
-              child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection("eventlog")
-                    .doc(formattedDate)
-                    .collection('info')
-                    .snapshots(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (context, index)
-                            // => Container(
-                            //       child: Text(snapshot.data?.docs[index]["Name"]),
-                            //     )
-                            {
-                          final lastIndex = snapshot.data!.docs.length - 1;
-                          // messageA(snapshot.data);
-                          // print(snapshot.data!.docs.length);
-                          if (lastIndex == snapshot.data!.docs.length - 1) {
-                            messageCC = messageC(snapshot.data);
-                            // sendEmail(messageAA, messageBB, messageCC);
-                            print(dateNow(formattedDate) + "22222");
-                            print(snapshot.data!.docs[lastIndex]["date"] +
-                                "111111");
-                            // if (dateNow(formattedDate) ==
-                            //     snapshot.data!.docs[lastIndex]["date"]) {
-                            //   sendEmail(messageAA, messageBB);
-                            // }
-                            // for (int i = 0; i < messageAA.length; i++) {
-                            //   print(messageAA.length);
-                            // }
-                            // print(messageAA);
-                          }
-                          // for (int i = 0; i < snapshot.data!.docs.length; i++) {
-                          //   print(snapshot.data!.docs[i]["Name"]);
-                          // }
-
-                          // print(dateNow(formattedDate));
-                        });
-                  } else {
-                    return Container();
-                  }
-                },
-              ),
-            )
           ],
         ),
       ),
@@ -267,7 +251,7 @@ List<String> messageC(QuerySnapshot<Object?>? data) {
   for (int i = 0; i < data!.docs.length; i++) {
     messageNaYai.add(" ชื่อ : " +
         data.docs[i]["Name"] +
-        " นามสกุล : " +
+        " " +
         data.docs[i]["LastName"] +
         " วันที่ : " +
         data.docs[i]["dateIn"] +
@@ -277,16 +261,41 @@ List<String> messageC(QuerySnapshot<Object?>? data) {
   return messageNaYai;
 }
 
-sendEmail(List<String> message, List<String> messageNaYai,
-    List<String> messageCC) async {
+sendEmail1(List<String> messageCC) async {
   final url = Uri.parse("https://api.emailjs.com/api/v1.0/email/send");
-  final service_id = "service_lqhozk2";
-  final template_id = "template_5ii629m";
-  final user_id = "fxJn7y0PvmfTrrM5F";
-  String to_email = "netiphong234567@gmail.com";
+  final service_id = "service_z8wh4bg";
+  final template_id = "template_skkx8tp";
+  final user_id = "k-uqrvUma4j1xST3A";
+  String to_email = "asdfgzxcvg1123@gmail.com";
   DateTime now = DateTime.now();
   String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+  var respond = await http.post(url,
+      headers: {
+        'origin': 'http:/localhost',
+        'Content-Type': 'application/json'
+      },
+      body: json.encode({
+        "service_id": service_id,
+        "template_id": template_id,
+        "user_id": user_id,
+        "template_params": {
+          "user_name": 'hello',
+          "to_email": to_email,
+          "messageCC": messageCC.join("\n"),
+          "date": formattedDate,
+        }
+      }));
+  print(respond.body);
+}
 
+sendEmail(List<String> message, List<String> messageNaYai) async {
+  final url = Uri.parse("https://api.emailjs.com/api/v1.0/email/send");
+  final service_id = "service_z8wh4bg";
+  final template_id = "template_3qyt2zj";
+  final user_id = "k-uqrvUma4j1xST3A";
+  String to_email = "JUt@gmail.com";
+  DateTime now = DateTime.now();
+  String formattedDate = DateFormat('yyyy-MM-dd').format(now);
   var respond = await http.post(url,
       headers: {
         'origin': 'http:/localhost',
@@ -301,9 +310,8 @@ sendEmail(List<String> message, List<String> messageNaYai,
           "to_email": to_email,
           "message": message.join("\n"),
           "messageNaYai": messageNaYai.join("\n"),
-          "messageCC": messageCC.join("\n")
+          "date": formattedDate,
         }
       }));
-
   print(respond.body);
 }
