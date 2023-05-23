@@ -48,7 +48,7 @@ class CartProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         SizedBox(
           width: 20,
@@ -60,10 +60,11 @@ class CartProductCard extends StatelessWidget {
           ),
         ),
         Container(
+          color: Colors.amber,
           child: Row(
             children: [
               Container(
-                width: 60,
+                width: 80,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -78,7 +79,7 @@ class CartProductCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text('  ${controller.productSubtotal[index]} บาท',
-                        style: TextStyle(fontFamily: "Schyler", fontSize: 22)),
+                        style: TextStyle(fontFamily: "Schyler", fontSize: 18)),
                   ],
                 ),
               )
