@@ -60,7 +60,6 @@ class CartProductCard extends StatelessWidget {
           ),
         ),
         Container(
-          color: Colors.amber,
           child: Row(
             children: [
               Container(
