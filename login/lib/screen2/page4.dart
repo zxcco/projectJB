@@ -116,18 +116,23 @@ class _page4State extends State<page4> {
                     .collection("eventlog")
                     .doc(formattedDate)
                     .collection('info')
+                    .orderBy('dateIn', descending: true)
                     .snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, index) {
+                          // for (int i = 0; i < snapshot.data!.docs.length; i++) {
+                          //   print(snapshot.data!.docs.length);
+                          //   print(snapshot.data!.docs[i]["Name"]);
+                          //   print(snapshot.data!.docs[i]["dateIn"]);
+                          // }
+
                           final lastIndex = snapshot.data!.docs.length - 1;
                           if (lastIndex == snapshot.data!.docs.length - 1) {
                             messageCC = messageC(snapshot.data);
-                            print(dateNow(formattedDate) + "22222");
-                            print(snapshot.data!.docs[lastIndex]["date"] +
-                                "111111");
+                            // print(dateNow(formattedDate) + "22222");
                           }
                         });
                   } else {
@@ -160,11 +165,11 @@ class _page4State extends State<page4> {
                           if (lastIndex == snapshot.data!.docs.length - 1) {
                             messageAA = messageA(snapshot.data);
                             // sendEmail(messageAA, messageBB, messageCC);
-                            print(dateNow(formattedDate) + "22222");
-                            print(snapshot.data!.docs[lastIndex]["date"] +
-                                "111111");
+                            // print(dateNow(formattedDate) + "22222");
+                            // print(snapshot.data!.docs[lastIndex]["date"] +
+                            //     "111111");
                             if (check == true) {
-                              print(dateNow(formattedDate) + "33333");
+                              // print(dateNow(formattedDate) + "33333");
                               if (dateNow(formattedDate) ==
                                   snapshot.data!.docs[lastIndex]["date"]) {
                                 sendEmail(messageAA, messageBB);
@@ -172,7 +177,7 @@ class _page4State extends State<page4> {
                                 check = false;
                               }
                             } else {
-                              print(dateNow(formattedDate) + "33333");
+                              // print(dateNow(formattedDate) + "33333");
                             }
 
                             // for (int i = 0; i < messageAA.length; i++) {
